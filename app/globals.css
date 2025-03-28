@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --cyan-100: #e0ffff;
+  --cyan-200: #00ffff;
+  --cyan-300: #00ccff;
+  --cyan-400: #0099ff;
+  --cyan-500: #0066ff;
+
+  --magenta-100: #ffe0ff;
+  --magenta-200: #ff00ff;
+  --magenta-300: #ff0099;
+  --magenta-400: #ff0066;
+  --magenta-500: #cc0066;
+
+  --gold-100: #ffffd0;
+  --gold-200: #ffcc00;
+  --gold-300: #ffaa00;
+  --gold-400: #ff9900;
+  --gold-500: #cc9900;
+}
+
+body {
+  background-color: #000000;
+  color: #ffffff;
+  font-family: monospace;
+  overflow: hidden;
+}
+
+/* Pixelated rendering for retro feel */
+canvas {
+  image-rendering: pixelated;
+}
+
