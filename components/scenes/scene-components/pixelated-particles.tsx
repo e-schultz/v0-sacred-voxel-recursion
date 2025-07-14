@@ -95,4 +95,3 @@ export const PixelatedParticles = memo(({ count, time }) => {
 })
 
 PixelatedParticles.displayName = "PixelatedParticles"
-

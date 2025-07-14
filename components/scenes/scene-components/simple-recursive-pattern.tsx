@@ -76,4 +76,3 @@ export const SimpleRecursivePattern = memo(({ time, opacity = 1 }) => {
 })
 
 SimpleRecursivePattern.displayName = "SimpleRecursivePattern"
-

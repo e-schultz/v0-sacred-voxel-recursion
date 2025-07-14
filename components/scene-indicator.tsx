@@ -28,4 +28,3 @@ const SceneIndicator = () => {
 }
 
 export default memo(SceneIndicator)
-

@@ -83,4 +83,3 @@ export const SimpleVectorField = memo(({ time, opacity = 1 }) => {
 })
 
 SimpleVectorField.displayName = "SimpleVectorField"
-

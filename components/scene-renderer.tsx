@@ -34,6 +34,8 @@ const SceneRenderer = () => {
             object.material.needsUpdate = true
           }
         }
+
+        // Remove attempts to modify read-only properties
       })
 
       prevTransitionRef.current = transitioning
@@ -91,4 +93,3 @@ const SceneRenderer = () => {
 }
 
 export default memo(SceneRenderer)
-

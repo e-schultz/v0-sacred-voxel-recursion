@@ -22,4 +22,3 @@ export const CircleGeometry = memo(({ position, radius, color, time, opacity = 1
 })
 
 CircleGeometry.displayName = "CircleGeometry"
-

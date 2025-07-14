@@ -54,4 +54,3 @@ const SceneFour = ({ scale = 1, opacity = 1, visible = true }) => {
 }
 
 export default memo(SceneFour)
-

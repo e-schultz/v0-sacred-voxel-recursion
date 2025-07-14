@@ -36,4 +36,3 @@ export const Star = memo(({ points, innerRadius, outerRadius, color, rotation = 
 })
 
 Star.displayName = "Star"
-

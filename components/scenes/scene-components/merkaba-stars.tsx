@@ -31,4 +31,3 @@ export const MerkabaStars = memo(({ position, time }) => {
 })
 
 MerkabaStars.displayName = "MerkabaStars"
-

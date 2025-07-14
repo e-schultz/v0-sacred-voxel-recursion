@@ -8,7 +8,7 @@ import { useAnimation } from "./animation-context"
 import SceneRenderer from "./scene-renderer"
 
 // 16-bit color palette (limited to 65,536 colors)
-const COLORS = {
+export const COLORS = {
   cyan: ["#00ffff", "#00ccff", "#0099ff", "#0066ff", "#0033ff"],
   magenta: ["#ff00ff", "#ff0099", "#ff0066", "#ff0033", "#cc0066"],
   gold: ["#ffcc00", "#ffaa00", "#ff9900", "#ff6600", "#cc9900"],
@@ -50,10 +50,13 @@ export default function SacredGeometryAnimation() {
           pixelRatio: pixelRatio,
         }}
         performance={{ min: 0.5 }} // Allow ThreeJS to reduce quality for performance
+        // Disable shadows completely to prevent the customDepthMaterial error
+        shadows={false}
       >
         <color attach="background" args={["#000000"]} />
         {/* Increase ambient light for better visibility */}
         <ambientLight intensity={0.7} />
+        {/* Use basic point light without shadows */}
         <pointLight position={[10, 10, 10]} intensity={1} />
         <OrbitControls
           enableZoom={false}
@@ -757,4 +760,3 @@ function hexToRgb(hex) {
 
   return { r, g, b }
 }
-

@@ -51,4 +51,3 @@ export const FlowerOfLife = memo(({ position, time, opacity = 1 }) => {
 })
 
 FlowerOfLife.displayName = "FlowerOfLife"
-

@@ -90,4 +90,3 @@ export const SriYantra = memo(({ position, time, scale = 1 }) => {
 })
 
 SriYantra.displayName = "SriYantra"
-

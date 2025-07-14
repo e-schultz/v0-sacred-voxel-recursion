@@ -68,4 +68,3 @@ export const SimpleVoxelGrid = memo(({ time, opacity = 1 }) => {
 })
 
 SimpleVoxelGrid.displayName = "SimpleVoxelGrid"
-

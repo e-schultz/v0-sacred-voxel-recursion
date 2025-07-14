@@ -58,4 +58,3 @@ export const SimpleGradient = memo(({ time, opacity = 1 }) => {
 })
 
 SimpleGradient.displayName = "SimpleGradient"
-

@@ -39,8 +39,18 @@ type AnimationContextType = {
   manuallyChangeScene: (sceneId: number) => void
 }
 
-// Create the context with a default value
-const AnimationContext = createContext<AnimationContextType | undefined>(undefined)
+// Create the context with default values
+const AnimationContext = createContext<AnimationContextType>({
+  time: 0,
+  setTime: () => {},
+  frame: 0,
+  currentScene: 0,
+  previousScene: null,
+  transitioning: false,
+  transitionProgress: 0,
+  sceneNames: SCENES.map((scene) => scene.name),
+  manuallyChangeScene: () => {},
+})
 
 // Provider component
 export function AnimationProvider({ children }: { children: React.ReactNode }) {
@@ -145,7 +155,7 @@ export function AnimationProvider({ children }: { children: React.ReactNode }) {
 // Custom hook for consuming the context
 export function useAnimation() {
   const context = useContext(AnimationContext)
-  if (context === undefined) {
+  if (!context) {
     throw new Error("useAnimation must be used within an AnimationProvider")
   }
   return context
@@ -168,4 +178,3 @@ export function hexToRgb(hex: string) {
 export function easeInOutCubic(x: number): number {
   return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2
 }
-

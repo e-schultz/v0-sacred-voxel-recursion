@@ -62,4 +62,3 @@ const SceneOne = ({ scale = 1, opacity = 1, visible = true }) => {
 }
 
 export default memo(SceneOne)
-
