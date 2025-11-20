@@ -27,9 +27,17 @@ body {
   color: #ffffff;
   font-family: monospace;
   overflow: hidden;
+  /* Use dynamic viewport height for mobile Safari */
+  min-height: 100dvh;
+  /* Prevent pull-to-refresh and overscroll on mobile */
+  overscroll-behavior: none;
 }
 
 /* Pixelated rendering for retro feel */
 canvas {
   image-rendering: pixelated;
+  /* Prevent default touch actions (scrolling) on the canvas */
+  touch-action: none;
+  /* Ensure canvas takes full dynamic height */
+  height: 100dvh !important;
 }

@@ -21,37 +21,108 @@ export const COLORS = {
 const SCENE_DURATION = 10 // seconds per scene
 const TRANSITION_DURATION = 2 // seconds for transition
 
+function detectWebGLSupport() {
+  if (typeof window === "undefined") return false
+
+  try {
+    const canvas = document.createElement("canvas")
+    const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl")
+
+    if (!gl) {
+      return false
+    }
+
+    // Check if we can get shader precision
+    const precision = gl.getShaderPrecisionFormat(gl.VERTEX_SHADER, gl.HIGH_FLOAT)
+    if (!precision) {
+      return false
+    }
+
+    return true
+  } catch (e) {
+    return false
+  }
+}
+
 // Main component that sets up the 3D environment
 export default function SacredGeometryAnimation() {
   // Use state to safely access window after component mounts
   const [pixelRatio, setPixelRatio] = useState(1)
   const [mounted, setMounted] = useState(false)
+  const [webglSupported, setWebglSupported] = useState(true)
+  const [isMobile, setIsMobile] = useState(false)
 
   // Safely access window properties after mount
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setPixelRatio(Math.min(window.devicePixelRatio, 2))
+      const mobileCheck = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+      setIsMobile(mobileCheck)
+
+      setPixelRatio(Math.min(window.devicePixelRatio, mobileCheck ? 1.5 : 2))
       setMounted(true)
+      setWebglSupported(detectWebGLSupport())
     }
   }, [])
 
   // Don't render anything until component is mounted
   if (!mounted) return null
 
+  if (!webglSupported) {
+    return (
+      <div className="w-full h-screen flex flex-col items-center justify-center bg-black text-white p-8">
+        <h1 className="text-3xl font-bold mb-4 text-cyan-400">WebGL Not Available</h1>
+        <p className="text-lg mb-4 text-center max-w-md">
+          Your browser doesn't support WebGL or it's disabled. This application requires WebGL to render 3D graphics.
+        </p>
+        <div className="text-sm text-gray-400 text-center max-w-lg">
+          <p className="mb-2">Possible solutions:</p>
+          <ul className="list-disc list-inside text-left">
+            <li>Update your browser to the latest version</li>
+            <li>Enable hardware acceleration in browser settings</li>
+            <li>Update your graphics drivers</li>
+            <li>Try a different browser (Chrome, Firefox, Edge)</li>
+          </ul>
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <div className="w-full h-screen">
+    <div className="w-full h-[100dvh]">
       <Canvas
         camera={{ position: [0, 0, 5], fov: 75 }}
+        onCreated={({ gl }) => {
+          console.log("[v0] WebGL context created successfully")
+          // Handle context loss
+          gl.domElement.addEventListener("webglcontextlost", (event) => {
+            event.preventDefault()
+            console.error("[v0] WebGL context lost")
+          })
+
+          gl.domElement.addEventListener("webglcontextrestored", () => {
+            console.log("[v0] WebGL context restored")
+          })
+        }}
         gl={{
           antialias: true,
           alpha: false,
-          powerPreference: "high-performance",
+          powerPreference: isMobile ? "default" : "high-performance",
           // Use the state value instead of directly accessing window
           pixelRatio: pixelRatio,
+          failIfMajorPerformanceCaveat: false,
         }}
-        performance={{ min: 0.5 }} // Allow ThreeJS to reduce quality for performance
+        performance={{ min: isMobile ? 0.3 : 0.5 }}
         // Disable shadows completely to prevent the customDepthMaterial error
         shadows={false}
+        frameloop="always"
+        onPointerDown={(e) => {
+          // @ts-ignore - setPointerCapture exists on HTMLCanvasElement
+          e.target.setPointerCapture?.(e.pointerId)
+        }}
+        onPointerUp={(e) => {
+          // @ts-ignore - releasePointerCapture exists on HTMLCanvasElement
+          e.target.releasePointerCapture?.(e.pointerId)
+        }}
       >
         <color attach="background" args={["#000000"]} />
         {/* Increase ambient light for better visibility */}

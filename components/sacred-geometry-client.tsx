@@ -13,8 +13,8 @@ const UIOverlay = dynamic(() => import("@/components/ui-overlay"), { ssr: false 
 // Simple loading fallback that works on both server and client
 function LoadingFallback() {
   return (
-    <div className="w-full h-screen flex items-center justify-center bg-black">
-      <div className="text-cyan-400 text-xl">Loading Sacred Geometry...</div>
+    <div className="w-full h-[100dvh] flex items-center justify-center bg-black">
+      <div className="text-cyan-400 text-xl animate-pulse">Loading Sacred Geometry...</div>
     </div>
   )
 }
